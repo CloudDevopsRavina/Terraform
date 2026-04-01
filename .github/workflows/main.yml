@@ -1,36 +1,43 @@
-name: Terraform Workflow
+name: Terraform Pipeline
 
 on:
 push:
 branches:
 - main
-workflow_dispatch:
+pull_request:
 
 jobs:
 terraform:
 runs-on: ubuntu-latest
 
 
-steps:
-  - name: Checkout Terraform Repo
-    uses: actions/checkout@v4
-    with:
-      repository: CloudDevopsRavina/Terraform
-      path: Terraform
+defaults:
+  run:
+    working-directory: Day-2-basic-code-tfvars
 
-  - name: Setup Terraform
-    uses: hashicorp/setup-terraform@v3
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v3
+
+  - name: Configure AWS credentials
+    uses: aws-actions/configure-aws-credentials@v2
+    with:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-region: us-east-1
+
+  - name: Set up Terraform
+    uses: hashicorp/setup-terraform@v2
+    with:
+      terraform_version: 1.6.6
 
   - name: Terraform Init
-    working-directory: Terraform/Day-2
     run: terraform init
 
   - name: Terraform Plan
-    working-directory: Terraform/Day-2
     run: terraform plan
 
   - name: Terraform Apply
     if: github.ref == 'refs/heads/main'
-    working-directory: Terraform/Day-2
     run: terraform apply -auto-approve
 
