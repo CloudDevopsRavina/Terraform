@@ -10,7 +10,7 @@ jobs:
 terraform:
 runs-on: ubuntu-latest
 
-```
+
 steps:
   - name: Checkout Terraform Repo
     uses: actions/checkout@v4
@@ -33,4 +33,4 @@ steps:
     if: github.ref == 'refs/heads/main'
     working-directory: Terraform/Day-2
     run: terraform apply -auto-approve
-```
+
