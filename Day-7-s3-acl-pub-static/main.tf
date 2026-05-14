@@ -8,6 +8,7 @@ resource "aws_s3_bucket" "my_bucket" {
     Environment = "dev"
   }
 }
+
 #enabling versioning for objects
 resource "aws_s3_bucket_versioning" "my-versioning" {
   bucket = aws_s3_bucket.my_bucket.id
