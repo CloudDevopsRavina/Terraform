@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/CloudDevopsRavina/Terraform.git'
+            }
+        }
+        stage("Terraform init"){
+        steps{
+            dir ('Day-2'){
+            sh 'terraform init'
+            }
+        }
+        }
+        stage('Terraform plan'){
+            steps{
+                dir('Day-2'){
+                sh 'terraform plan'
+                }
+            }
+        }
+        stage('Terraform apply'){
+            steps{
+                dir('Day-2'){
+                sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+    }
+}
