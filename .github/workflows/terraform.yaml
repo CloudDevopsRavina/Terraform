@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Day-6-customenetworking
+        working-directory: Day-6-Customenetworking
 
     steps:
       - name: Checkout Repository
